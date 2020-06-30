@@ -5,7 +5,7 @@ count=2
 check=0
 while [ $count -gt 1 ]
 do
-    sleep 60
+    sleep 1
     count=`ps -ef | grep test | wc -l`
     echo "==========================================================================================================================================="
 
@@ -19,7 +19,7 @@ do
     f2_file=""
     now_test=`ps -ef | grep '\-test' | grep -v grep | awk '{print $8}'`
     echo "now_test case is "$now_test
-    $check = 1
+    check=0
     if [ $check -eq 1 ];then
          echo "=========================test fail,Here is the logs of failed use cases========================="
          echo "=========================test fail,Here is the logs of failed use cases========================="
