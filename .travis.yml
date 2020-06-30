@@ -2,4 +2,4 @@ language: c++
 sudo: required
 before_install: sudo apt-get install fio -y
 intall: ./install-dependencies.sh
-script: mk-deb.sh
+script: bash mk-deb.sh
