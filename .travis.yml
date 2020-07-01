@@ -7,4 +7,4 @@ intall:
   - sudo docker pull chenyunhui/untest:2.0.0
 script:
   - sudo docker run -d --privileged --name ut --volume ~/chenyunhui-1/test-cyh:/ut chenyunhui/untest:2.0.0 /bin/bash /etc/rc.local 
-  - sudo docker exec -it untest /bin/bash -c "cd /root/open/ && cp /ut/untest.sh /root/open/ && bash untest.sh"
+  - sudo docker exec -it ut /bin/bash -c "cd /root/open/ && cp /ut/untest.sh /root/open/ && bash untest.sh"
