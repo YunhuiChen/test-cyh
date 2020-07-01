@@ -4,8 +4,8 @@ services:
   - docker
     #before_install: sudo apt-get install fio -y
 intall: 
-  - sudo docker pull chenyunhui/untest:2.0.0
+  - sudo docker pull chenyunhui/untest:1.0.0
 script:
-  - sudo docker run -d --privileged --name ut --volume ~/chenyunhui-1/test-cyh:/ut chenyunhui/untest:2.0.0 /bin/bash /etc/rc.local 
+  - sudo docker run -d --privileged --name ut --volume ~/chenyunhui-1/test-cyh:/ut chenyunhui/untest:1.0.0 /bin/bash /etc/rc.local 
   - sudo docker exec -it ut  cp -r /root/new/* /ut/
   - sudo docker exec -it ut  /bin/bash -c "cd /ut/  && bash untest.sh"
