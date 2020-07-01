@@ -1,0 +1,133 @@
+COPTS = [
+    "-DGFLAGS=gflags",
+    "-DOS_LINUX",
+    "-DSNAPPY",
+    "-DHAVE_SSE42",
+    "-fno-omit-frame-pointer",
+    "-momit-leaf-frame-pointer",
+    "-msse4.2",
+    "-pthread",
+    "-Wsign-compare",
+    "-Wno-unused-parameter",
+    "-Wno-unused-variable",
+    "-Woverloaded-virtual",
+    "-Wnon-virtual-dtor",
+    "-Wno-missing-field-initializers",
+    "-std=c++14",
+]
+
+cc_library(
+    name = "chunkserver-lib",
+    srcs = glob(
+        ["*.cpp"],
+        exclude = [
+            "chunkserver_main.cpp",
+        ],
+    ),
+    hdrs = glob([
+        "*.h",
+    ]),
+    copts = COPTS,
+    linkopts = [
+        "-lrt",
+        "-lssl",
+        "-lcrypto",
+        "-ldl",
+        "-lz",
+        "-lpthread",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//external:braft",
+        "//external:brpc",
+        "//external:bthread",
+        "//external:butil",
+        "//external:gflags",
+        "//external:glog",
+        "//external:leveldb",
+        "//external:protobuf",
+        "//proto:chunkserver-cc-protos",
+        "//proto:topology_cc_proto",
+        "//src/chunkserver/datastore:chunkserver_datastore",
+        "//src/common:curve_common",
+        "//src/common:curve_s3_adapter",
+        "//src/fs:lfs",
+        "//src/client:curve_client",
+	"//include/client:include_client",
+    ],
+)
+
+cc_library(
+    name = "chunkserver-test-lib",
+    srcs = glob(
+        ["*.cpp"],
+        exclude = [
+            "chunkserver_main.cpp",
+        ],
+    ),
+    hdrs = glob([
+        "*.h",
+    ]),
+    copts = COPTS,
+    defines = ["UNIT_TEST"],
+    linkopts = [
+        "-lrt",
+        "-lssl",
+        "-lcrypto",
+        "-ldl",
+        "-lz",
+        "-lpthread",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//external:braft",
+        "//external:brpc",
+        "//external:bthread",
+        "//external:butil",
+        "//external:gflags",
+        "//external:glog",
+        "//external:leveldb",
+        "//external:protobuf",
+        "//proto:chunkserver-cc-protos",
+        "//proto:topology_cc_proto",
+        "//src/chunkserver/datastore:chunkserver_datastore",
+        "//src/common:curve_common",
+        "//src/common:curve_s3_adapter",
+        "//src/fs:lfs",
+        "//src/client:curve_client",
+    ],
+)
+
+# chunkserver exec
+cc_binary(
+    name = "chunkserver",
+    srcs = glob([
+        "chunkserver_main.cpp",
+    ]),
+    copts = COPTS,
+    linkopts = [
+        "-lrt",
+        "-lssl",
+        "-lcrypto",
+        "-ldl",
+        "-lz",
+        "-lpthread",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//external:braft",
+        "//external:brpc",
+        "//external:bthread",
+        "//external:butil",
+        "//external:gflags",
+        "//external:glog",
+        "//external:leveldb",
+        "//external:protobuf",
+        "//proto:chunkserver-cc-protos",
+        "//src/chunkserver:chunkserver-lib",
+        "//src/chunkserver/datastore:chunkserver_datastore",
+        "//src/common:curve_common",
+        "//src/common:curve_s3_adapter",
+        "//src/fs:lfs",
+    ],
+)

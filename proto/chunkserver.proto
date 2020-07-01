@@ -1,0 +1,21 @@
+syntax="proto2";
+package curve.chunkserver;
+option cc_generic_services = true;
+
+message ChunkServerMetadata {
+    required uint32 version = 1;
+    required uint32 id = 2;
+    required string token = 3;
+    required uint32 checksum = 4;
+};
+
+message ChunkServerStatusRequest {
+}
+
+message ChunkServerStatusResponse {
+    required bool copysetLoadFin = 1;
+}
+
+service ChunkServerService {
+    rpc ChunkServerStatus (ChunkServerStatusRequest) returns (ChunkServerStatusResponse);
+};

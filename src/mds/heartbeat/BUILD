@@ -1,0 +1,24 @@
+load(
+    "//:copts.bzl",
+    "GCC_FLAGS",
+    "GCC_TEST_FLAGS",
+)
+
+cc_library(
+    name = "heartbeat",
+    srcs = glob(["*.cpp"]),
+    hdrs = glob(["*.h"]),
+    copts = GCC_FLAGS,
+    visibility = ["//visibility:public"],
+    deps = [
+        "//external:brpc",
+        "//external:gflags",
+        "//external:glog",
+        "//proto:chunkserver-cc-protos",
+        "//proto:topology_cc_proto",
+        "//src/common:curve_common",
+        "//src/common/concurrent:curve_concurrent",
+        "//src/mds/schedule",
+        "//src/mds/topology",
+    ],
+)
