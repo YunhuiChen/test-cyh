@@ -1,5 +1,10 @@
 language: c++
 sudo: required
-before_install: sudo apt-get install fio -y
-intall: ./install-dependencies.sh
-script: bash mk-deb.sh
+services:
+  - docker
+    #before_install: sudo apt-get install fio -y
+intall: 
+  - sudo docker pull chenyunhui/untest:2.0.0
+script:
+  - sudo docker run -d --privileged --name untest --volume ~/chenyunhui-1/test-cyh:/untest chenyunhui/untest:2.0.0 /bin/bash /etc/rc.local 
+  - sudo docker exec -it untest /bin/bash -c "cd /root/open/curve/ && bash mk-deb.sh"
